@@ -337,14 +337,15 @@
 		allowed = {
 			"DebugEnvsDontMerge",
 			"DebugEnvsInherit",
-			"ExcludeFromBuild",
+			"ExcludeFromBuild", -- KEEPFOREVER
+			"LinkTimeOptimization", -- KEEPFOREVER
 			"Maps",
-			"MultiProcessorCompile",
+			"MultiProcessorCompile", -- KEEPFOREVER
 			"No64BitChecks",
 			"NoCopyLocal",
 			"NoImplicitLink",
 			"NoImportLib",         -- DEPRECATED
-			"NoIncrementalLink",
+			"NoIncrementalLink", -- KEEPFOREVER
 			"NoManifest",
 			"NoMinimalRebuild",
 			"NoPCH",
@@ -353,7 +354,9 @@
 			"OmitDefaultLibrary",
 			"RelativeLinks",
 			"ShadowedVariables",
+			"StaticRuntime", -- KEEPFOREVER
 			"UndefinedIdentifiers",
+			"WinMain", -- KEEPFOREVER
 			"WPF",
 		},
 	}
@@ -1024,6 +1027,30 @@
 	}
 
 	api.register {
+		name = "randomizedbaseaddress",
+		scope = "config",
+		kind = "boolean",
+	}
+
+	api.register {
+		name = "imagehassafeexceptionhandlers",
+		scope = "config",
+		kind = "boolean",
+	}
+
+	api.register {
+		name = "enablecomdatfolding",
+		scope = "config",
+		kind = "boolean",
+	}
+
+	api.register {
+		name = "optimizereferences",
+		scope = "config",
+		kind = "boolean",
+	}
+
+	api.register {
 		name = "editorintegration",
 		scope = "workspace",
 		kind = "boolean",
@@ -1259,6 +1286,42 @@
 	api.alias("fileextension", "fileExtension")
 	api.alias("propertydefinition", "propertyDefinition")
 	api.alias("removefiles", "excludes")
+
+
+-----------------------------------------------------------------------------
+--
+-- Handlers for deprecated fields and values.
+--
+-----------------------------------------------------------------------------
+
+	-- 13 April 2017
+
+	api.deprecateValue("flags", "WinMain", 'Use `entrypoint "WinMainCRTStartup"` instead',
+	function(value)
+		entrypoint "WinMainCRTStartup"
+	end,
+	function(value)
+		entrypoint "mainCRTStartup"
+	end)
+
+	-- 31 October 2017
+
+	api.deprecateValue("flags", "StaticRuntime", 'Use `staticruntime "On"` instead',
+	function(value)
+		staticruntime "On"
+	end,
+	function(value)
+		staticruntime "Default"
+	end)
+	
+	--27 November 2024
+	api.deprecateValue("flags", "LinkTimeOptimization", "Use `linktimeoptimization` instead.",
+	function(value)
+		linktimeoptimization("On")
+	end,
+	function(value)
+		linktimeoptimization("Default")
+	end)
 
 -----------------------------------------------------------------------------
 --

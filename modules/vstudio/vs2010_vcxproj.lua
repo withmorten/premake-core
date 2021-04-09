@@ -828,6 +828,9 @@
 				m.programDatabaseFile,
 				m.assemblyDebug,
 				m.profile,
+				m.randomizedBaseAddress,
+				m.imageHasSafeExceptionHandlers,
+				m.enableCOMDATFolding,
 			}
 		end
 	end
@@ -2082,6 +2085,43 @@
 		end
 	end
 
+
+	function m.randomizedBaseAddress(cfg)
+		if (cfg.randomizedBaseAddress == true) then
+			m.element("RandomizedBaseAddress", nil, 'true')
+		elseif (cfg.randomizedBaseAddress == false) then
+			m.element("RandomizedBaseAddress", nil, 'false')
+		end
+	end
+
+
+	function m.imageHasSafeExceptionHandlers(cfg)
+		if (cfg.imageHasSafeExceptionHandlers == true) then
+			m.element("ImageHasSafeExceptionHandlers", nil, 'true')
+		elseif (cfg.imageHasSafeExceptionHandlers == false) then
+			m.element("ImageHasSafeExceptionHandlers", nil, 'false')
+		end
+	end
+
+
+	function m.enableCOMDATFolding(cfg)
+		if cfg.enableCOMDATFolding == false then
+			m.element("EnableCOMDATFolding", nil, 'false')
+		elseif config.isOptimizedBuild(cfg) or cfg.enableCOMDATFolding == true then
+			m.element("EnableCOMDATFolding", nil, 'true')
+		end
+	end
+
+
+	function m.optimizeReferences(cfg)
+		if (cfg.optimizeReferences == false) then
+			m.element("OptimizeReferences", nil, 'false')
+		elseif config.isOptimizedBuild(cfg) or cfg.optimizeReferences == true then
+			m.element("OptimizeReferences", nil, 'true')
+		end
+	end
+
+
 	function m.allModulesPublic(cfg)
 		if _ACTION >= "vs2019" then
 			if cfg.allmodulespublic ~= nil then
@@ -3074,13 +3114,6 @@
 		end
 	end
 
-
-	function m.optimizeReferences(cfg)
-		if config.isOptimizedBuild(cfg) then
-			m.element("EnableCOMDATFolding", nil, "true")
-			m.element("OptimizeReferences", nil, "true")
-		end
-	end
 
 	function m.linkTimeCodeGeneration(cfg)
 		if cfg.linktimeoptimization == "On" then

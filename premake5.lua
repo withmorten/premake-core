@@ -118,6 +118,7 @@
 
 		filter { 'system:windows' }
 			platforms   { 'x86', 'x64' }
+			toolset     "v141_xp"
 
 		filter "configurations:Debug"
 			defines     "_DEBUG"

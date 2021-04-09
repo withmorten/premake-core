@@ -1350,6 +1350,30 @@
 	}
 
 	api.register {
+		name = "randomizedbaseaddress",
+		scope = "config",
+		kind = "boolean",
+	}
+
+	api.register {
+		name = "imagehassafeexceptionhandlers",
+		scope = "config",
+		kind = "boolean",
+	}
+
+	api.register {
+		name = "enablecomdatfolding",
+		scope = "config",
+		kind = "boolean",
+	}
+
+	api.register {
+		name = "optimizereferences",
+		scope = "config",
+		kind = "boolean",
+	}
+
+	api.register {
 		name = "editorintegration",
 		scope = "workspace",
 		kind = "boolean",

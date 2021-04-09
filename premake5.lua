@@ -163,9 +163,11 @@
 
 		filter { "system:windows", "options:arch=x86 or arch=Win32" }
 			platforms { "Win32" }
+			toolset     "v141_xp"
 
 		filter { "system:windows", "options:arch=x86_64 or arch=x64" }
 			platforms { "x64" }
+			toolset     "v141_xp"
 
 		filter { "system:windows", "options:not arch" }
 			platforms { "x86", "x64" }
